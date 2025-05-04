@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button-group {
+            display: inline-flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .button-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .button-group button:first-child {
+            background-color: #4a6fa5;
+            color: white;
+        }
+        
+        .button-group button:first-child:hover {
+            background-color: #3a5a80;
+        }
+        
+        .button-group a button {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .button-group a button:hover {
+            background-color: #c0392b;
+        }
+
+        #error {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>注册</h1>
+        <input type="password" id="password" placeholder="输入密码">
+        <div class="button-container">
+            <div class="button-group">
+                <button onclick="checkPassword()">注册</button>
+                <a href="https://vdse.bdstatic.com//192d9a98d782d9c74c96f09db9378d93.mp4">
+                    <button>已有账号？点我登录</button>
+                </a>
+            </div>
+        </div>
+        <div id="error"></div>
+    </div>
+    <script>
+function checkPassword() {
+    let pw = document.getElementById('password').value;
+    let errorElement = document.getElementById('error');
+    errorElement.textContent = ''; // 清空错误提示
+    
+    // 不输？
+    if(pw.length === 0) {
+        errorElement.textContent = '你（密）码呢？（无恶意）（doge）';
+        return;
+    }
+
+    // 50% 概率直接返回"服务器繁忙"
+    if (Math.random() > 0.8) {
+        errorElement.textContent = '服务器繁忙，请稍后再试：）';
+        return;
+    }
+
+    // 以下是各种恶搞密码规则
+    if (pw.length < 12) {
+        errorElement.textContent = '密码必须至少有12个字符，否则强度过低';
+    } else if (!/[a-zA-Z]/.test(pw)) {
+        errorElement.textContent = '密码至少有一个字母，否则强度过低';
+    } else if (!/[0-9]/.test(pw) || (pw.match(/[0-9]/g) || []).length < 3) {
+        errorElement.textContent = '密码至少有3个数字，否则强度过低';
+    } else if (!/[a-z]/.test(pw) || (pw.match(/[a-z]/g) || []).length < 3) {
+        errorElement.textContent = '密码至少有3个小写字母，否则强度过低';
+    } else if (!/[A-Z]/.test(pw) || (pw.match(/[A-Z]/g) || []).length < 3) {
+        errorElement.textContent = '密码至少有3个大写字母，否则强度过低';
+    } else if (/[^a-zA-Z0-9_\-]/.test(pw)) {
+        errorElement.textContent = '密码不能有特殊字符 ("_" 和 "-" 除外)，否则不易识别';
+    } else if (!/_/.test(pw)) {
+        errorElement.textContent = '密码至少有一个下划线，否则强度过低';
+    } else if (!/\-/.test(pw)) {
+        errorElement.textContent = '密码至少有一个连字符，否则强度过低';
+    } else if (/[a-z]{3}/.test(pw)) {
+        errorElement.textContent = '密码中不能连续有3个以上的小写字母，否则强度过低';
+    } else if (/[A-Z]{3}/.test(pw)) {
+        errorElement.textContent = '密码中不能连续有3个以上的大写字母，否则强度过低';
+    } else if (/(012|123|234|345|456|567|678|789)/.test(pw)) {
+        errorElement.textContent = '密码中不能有3个以上连续递增数字，否则强度过低';
+    } else if (/(987|876|765|654|543|432|321|210)/.test(pw)) {
+        errorElement.textContent = '密码中不能有3个以上连续递减数字，否则强度过低';
+    } else if (/[0-9]{4}/.test(pw)) {
+        errorElement.textContent = '密码中不能连续有4个以上的数字，否则强度过低';
+    } else if (/[a-zA-Z]{4}/.test(pw)) {
+        errorElement.textContent = '密码中不能连续有4个以上的字母，否则强度过低';
+    } else if (/^[0-9_a-z]/.test(pw)) {
+        errorElement.textContent = '密码的开头只能是大写字母，易于记忆';
+    } else if (/[0-9_a-z]$/.test(pw)) {
+        errorElement.textContent = '密码的结尾只能是大写字母，易于记忆';
+    } else if (/(.).*\1/.test(pw)) {
+        errorElement.textContent = '密码中不能有重复的字符，否则强度过低';
+    } else if (/[\-_]{2}/.test(pw)) {
+        errorElement.textContent = '密码中不能连续有2个以上的特殊字符，否则强度过低';
+    } else if (/(\d-|-\d)/.test(pw)) {
+        errorElement.textContent = '密码中数字和连字符不能连在一起，否则可能误认为是减号';
+    } else if (/([A-Z]_|_[A-Z])/.test(pw)) {
+        errorElement.textContent = '密码中大写字母和下划线不能连在一起，否则不符常理';
+    } else if (/[CMOPSUVWXZ]/.test(pw)) {
+        errorElement.textContent = '密码中不能出现CMOPSUVWXZ这些大小写相似的字母的大写，否则可能误认，统一使用小写';
+    } else if (/[019]/.test(pw)) {
+        errorElement.textContent = '密码中不能出现0,1,9这些数字，否则可能与o,i,q混淆';
+    } else if (/[\-_].{0,4}[\-_]/.test(pw)) {
+        errorElement.textContent = '密码中特殊字符至少间隔5个字符，否则可能混淆';
+    } else if (/sb|2b/i.test(pw)) {
+        errorElement.textContent = '密码中不能出现"sb"或"2b"（不区分大小写）';
+    } else if (pw.length > 13) {
+        errorElement.textContent = '密码必须最多有13个字符，否则不易记忆';
+    } else if (!/[πΩμ]/.test(pw)) {
+        errorElement.textContent = '密码必须包含至少一个希腊字母，否则不够国际化';
+    } else if (!/[\u{1F600}-\u{1F64F}]/u.test(pw)) {
+        errorElement.textContent = '密码必须包含至少一个emoji表情，否则不够生动';
+    } else if (!isPalindrome(pw)) {
+        errorElement.textContent = '密码必须是回文（正读反读都一样），否则不够对称美';
+    } else if (!containsPrimeNumber(pw)) {
+        errorElement.textContent = '密码必须包含至少一个3位以上的质数';
+    } else if (!isPrimeLength(pw)) {
+        errorElement.textContent = '密码长度必须是一个质数';
+    } else {
+        errorElement.textContent = '提交失败，请稍后再试：）';
+    }
+}
+
+// ===== 辅助函数 =====
+function isPalindrome(str) {
+    return str === str.split('').reverse().join('');
+}
+
+function containsPrimeNumber(str) {
+    let numbers = str.match(/\d{3,}/g) || [];
+    return numbers.some(num => {
+        let n = parseInt(num);
+        for (let i = 2, s = Math.sqrt(n); i <= s; i++)
+            if (n % i === 0) return false;
+        return n > 1;
+    });
+}
+
+function isPrimeLength(str) {
+    let len = str.length;
+    for (let i = 2, s = Math.sqrt(len); i <= s; i++)
+        if (len % i === 0) return false;
+    return len > 1;
+}
+    </script>
+</body>
+</html>

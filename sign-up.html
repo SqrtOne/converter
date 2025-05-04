@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>注册</title>
+    <title>登录/注册-文件转换者</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -81,13 +81,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>注册</h1>
+        <h1>登录 / 注册</h1>
+        <input type="text" id="id" placeholder="输入用户名">
         <input type="password" id="password" placeholder="输入密码">
         <div class="button-container">
             <div class="button-group">
-                <button onclick="checkPassword()">注册</button>
+                <button onclick="checkPassword()">登录 / 注册</button>
                 <a href="https://vdse.bdstatic.com//192d9a98d782d9c74c96f09db9378d93.mp4">
-                    <button>已有账号？点我登录</button>
+                    <button>帮助</button>
                 </a>
             </div>
         </div>
@@ -95,23 +96,29 @@
     </div>
     <script>
 function checkPassword() {
+    let id = document.getElementById('id').value;
     let pw = document.getElementById('password').value;
     let errorElement = document.getElementById('error');
     errorElement.textContent = ''; // 清空错误提示
+
+    if (id.length === 0) {
+        errorElement.textContent = '无名之辈你好，本站需要用户名';
+        return;
+    }
     
     // 不输？
-    if(pw.length === 0) {
+    if (pw.length === 0) {
         errorElement.textContent = '你（密）码呢？（无恶意）（doge）';
         return;
     }
 
-    // 50% 概率直接返回"服务器繁忙"
+    // 20% 概率直接返回"服务器繁忙"
     if (Math.random() > 0.8) {
         errorElement.textContent = '服务器繁忙，请稍后再试：）';
         return;
     }
 
-    // 以下是各种恶搞密码规则
+    // 以下是各种密（mei）码（ma）规则
     if (pw.length < 12) {
         errorElement.textContent = '密码必须至少有12个字符，否则强度过低';
     } else if (!/[a-zA-Z]/.test(pw)) {

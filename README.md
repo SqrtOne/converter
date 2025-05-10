@@ -5,3 +5,5 @@
 SqrtOne 出品
 
 链接：[戳这里](https://sqrtone.github.io/converter/)
+
+灵感来源：tjy-gitnub/nikov
